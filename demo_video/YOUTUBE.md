@@ -42,7 +42,7 @@ LINKS
 • Website:        https://kayomarz.com
 • TransBench (product repo):   https://github.com/kayomarz97/TransBench
 • How this video was made (video repo):  https://github.com/kayomarz97/TransBench-demo
-• YouTube:        <paste this video's URL here after upload>
+• YouTube:        https://youtu.be/RFRhDaPUonE
 
 ────────────────────────────
 CREDITS
@@ -62,4 +62,4 @@ Every hypothesis is grounded in a real, resolvable paper — and if it can't be,
 nothing. Same inputs, same figure, every time. Repo → https://github.com/kayomarz97/TransBench
 
 ---
-*Fill in the YouTube URL after upload. Thumbnail: `thumbnail.png` (1280×720). Captions: `captions.srt`.*
+*Video: https://youtu.be/RFRhDaPUonE · Thumbnail: `thumbnail.png` (1280×720) · Captions: `captions.srt`.*
