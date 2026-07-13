@@ -3,7 +3,9 @@
 **A 3-minute product film, made by a physician with zero video-editing skills.**
 Script, animation, voiceover timing, and the entire edit were planned and produced by **Claude Code**. I just told it how I was feeling.
 
-▶️ **Watch it:** https://youtu.be/RFRhDaPUonE
+▶️ **Watch it below**, or on **[YouTube](https://youtu.be/RFRhDaPUonE)**:
+
+<video src="https://github.com/kayomarz97/TransBench-demo/raw/main/demo_video/TransBench_demo_final_1080p.mp4" poster="https://github.com/kayomarz97/TransBench-demo/raw/main/demo_video/thumbnail.png" controls></video>
 🌐 **Me:** [kayomarz.com](https://kayomarz.com) · 🧪 **The product:** [github.com/kayomarz97/TransBench](https://github.com/kayomarz97/TransBench)
 
 ---
@@ -57,6 +59,49 @@ music / SFX ──────────────────────�
 | `pipeline/NARRATION.md`, `DRAFT*_PLAN.md` | The **script** and the **making-of trail** across drafts. |
 
 > **Privacy note:** the raw screen recording and any local capture footage are deliberately **not** included (they contained a session URL and a server address). Everything shown in the final film is public and real.
+
+---
+
+## Run the pipeline yourself
+
+The film is built like software — three deterministic stages. You need **Python 3**, **ffmpeg**
+(with `ffprobe`), and two Python packages:
+
+```bash
+pip install playwright edge-tts
+playwright install chromium
+```
+
+**1 · Voiceover with word-level timings** — Microsoft neural TTS emits one audio file per beat plus a
+JSON of per-word timecodes, the single source of truth every animation is anchored to:
+
+```bash
+python3 pipeline/vo/generate_vo.py
+```
+
+**2 · Capture a scene → video, deterministically** — a headless Chromium renders an HTML scene under
+an injected *virtual clock* (it overrides `performance.now` / `requestAnimationFrame` / `Date.now`), so
+every frame is stepped by hand and the render never jitters. This stage is the reusable core and runs
+standalone on any committed scene:
+
+```bash
+python3 pipeline/capture_anim.py pipeline/scenes/works.html works.mp4 auto 30
+#                                 └ any scene            └ out     └ dur └ fps
+```
+
+**3 · Assemble + mix** — ffmpeg stitches the captured beats, mixes music under the voice, normalizes
+loudness, and writes the final 1080p/30 film:
+
+```bash
+python3 pipeline/assemble5.py
+```
+
+> **Honest caveats.** Stages 1 and 3 encode *this* film's exact beats (and some absolute paths), and the
+> final mix needs assets kept out of this repo by design — the **music/SFX** (Mixkit, licensed, not
+> redistributable — see [`demo_video/CREDITS_licenses.md`](demo_video/CREDITS_licenses.md)) and the raw
+> screen recording (**deliberately excluded** — it held a live session URL). So a *byte-identical*
+> re-render isn't the goal; the **method** is. Stage 2 (`capture_anim.py`) is fully reproducible today —
+> point it at any `pipeline/scenes/*.html` and you get a deterministic clip.
 
 ---
 
