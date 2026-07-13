@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>roadmap</title>
+<style>
+  :root{--bg:#0A0E14;--bg-elev:#131A24;--bg-elev-2:#1B2330;--text:#E6EDF3;--muted:#7D8A9C;--faint:#4A5568;
+    --accent:#2DD4BF;--accent-2:#8B7DF6;--grounded:#34D399;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+    --accent-wash:rgba(45,212,191,.14);--accent-2-wash:rgba(139,125,246,.16);--grounded-wash:rgba(52,211,153,.14);
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);
+    --spring:cubic-bezier(.2,1.6,.4,1);}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}*{box-sizing:border-box}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #c{position:relative;width:1920px;height:1080px;transform-origin:center;color:var(--text);font-family:var(--sans);overflow:hidden}
+  #cam{position:absolute;inset:0;transform-origin:50% 52%}
+  /* brightness bloom that lifts the whole scene at the payoff */
+  #lift{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 1.3s ease;
+    background:radial-gradient(circle at 50% 60%,rgba(52,211,153,.20),rgba(45,212,191,.08) 38%,transparent 68%)}
+  #lift.on{opacity:1}
+  .kick{position:absolute;top:150px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:20px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--faint);opacity:0;transition:opacity .5s var(--ease)}
+  .kick.in{opacity:1}
+  .rail{position:absolute;top:540px;left:160px;right:160px;height:4px;background:var(--line-2);border-radius:4px}
+  .rfill{position:absolute;top:540px;left:160px;height:4px;width:0;border-radius:4px;
+    background:linear-gradient(90deg,var(--accent),var(--grounded));transition:width .8s var(--ease);box-shadow:0 0 16px var(--accent)}
+  /* glowing leading cap that travels with the fill */
+  .rfill::after{content:"";position:absolute;right:-5px;top:-4px;width:12px;height:12px;border-radius:999px;
+    background:#fff;box-shadow:0 0 16px 4px var(--grounded),0 0 6px 2px #fff}
+  .node{position:absolute;top:540px;transform:translate(-50%,-50%);text-align:center;width:300px}
+  .dot{width:74px;height:74px;border-radius:999px;background:var(--bg-elev);border:2px solid var(--line-2);margin:0 auto;
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    opacity:.5;transform:scale(.8);transition:transform .55s var(--spring),opacity .45s var(--ease),border-color .45s var(--ease),color .45s var(--ease),box-shadow .45s var(--ease)}
+  .dot svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .node.in .dot{opacity:1;transform:scale(1);border-color:var(--accent);color:var(--accent);box-shadow:0 0 30px var(--accent-wash),inset 0 0 14px var(--accent-wash)}
+  .node.v.in .dot{border-color:var(--accent-2);color:var(--accent-2);box-shadow:0 0 30px var(--accent-2-wash),inset 0 0 14px var(--accent-2-wash)}
+  .node.g.in .dot{border-color:var(--grounded);color:var(--grounded);box-shadow:0 0 34px var(--grounded-wash),inset 0 0 16px var(--grounded-wash)}
+  .lab{font-size:24px;font-weight:600;margin-top:22px;opacity:.35;transform:translateY(6px);transition:all .45s var(--ease)}
+  .node.in .lab{opacity:1;transform:none}
+  .sub{font-family:var(--mono);font-size:15px;color:var(--muted);margin-top:7px;opacity:0;transition:opacity .45s var(--ease)}
+  .node.in .sub{opacity:1}
+  .toast{position:absolute;top:700px;left:0;right:0;text-align:center;opacity:0;transform:translateY(16px) scale(.96);transition:all .55s var(--spring)}
+  .toast.in{opacity:1;transform:none}
+  .toast .box{display:inline-flex;align-items:center;gap:14px;font-size:27px;color:var(--grounded);background:var(--grounded-wash);
+    border:1px solid rgba(52,211,153,.5);border-radius:16px;padding:17px 28px;box-shadow:0 0 40px var(--grounded-wash)}
+  .toast .box b{color:var(--text)}
+  .toast .box svg{width:28px;height:28px;fill:none;stroke:var(--grounded);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style></head>
+<body><div id="stage"><div id="c"><div id="cam">
+  <div id="lift"></div>
+  <div class="kick" id="kick">Where it's going</div>
+  <div class="rail"></div><div class="rfill" id="fill"></div>
+
+  <div class="node g" id="n0" style="left:160px"><div class="dot">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="8"/><path d="M12 13.5 V9.5"/><path d="M12 13.5 L14.8 15.2"/><path d="M9 2.5 H15"/><path d="M12 2.5 V5.5"/></svg>
+    </div><div class="lab">today</div><div class="sub">one run at a time</div></div>
+
+  <div class="node v" id="n1" style="left:540px"><div class="dot">
+    <svg viewBox="0 0 24 24"><path d="M4 5 H20 a1 1 0 0 1 1 1 V15 a1 1 0 0 1 -1 1 H11 L6 20 V16 H4 a1 1 0 0 1 -1 -1 V6 a1 1 0 0 1 1 -1 Z"/><path d="M8 10.5 h0.01"/><path d="M12 10.5 h0.01"/><path d="M16 10.5 h0.01"/></svg>
+    </div><div class="lab">WhatsApp</div><div class="sub">text it like a colleague</div></div>
+
+  <div class="node" id="n2" style="left:920px"><div class="dot">
+    <svg viewBox="0 0 24 24"><path d="M12 2.5 L20 5.5 V11 C20 16 16.5 19.5 12 21.5 C7.5 19.5 4 16 4 11 V5.5 Z"/><path d="M8.8 12 L11 14.2 L15.4 9.6"/></svg>
+    </div><div class="lab">de-identify</div><div class="sub">before a word is stored</div></div>
+
+  <div class="node" id="n3" style="left:1300px"><div class="dot">
+    <svg viewBox="0 0 24 24"><path d="M12 3 L21 8 L12 13 L3 8 Z"/><path d="M3 12 L12 17 L21 12"/><path d="M3 16 L12 21 L21 16"/></svg>
+    </div><div class="lab">remember</div><div class="sub">every brief</div></div>
+
+  <div class="node g" id="n4" style="left:1680px"><div class="dot">
+    <svg viewBox="0 0 24 24"><path d="M6 16 V11 a6 6 0 0 1 12 0 V16 L20 18.5 H4 Z"/><path d="M10 18.5 a2 2 0 0 0 4 0"/></svg>
+    </div><div class="lab">watch</div><div class="sub">it pings you</div></div>
+
+  <div class="toast" id="toast"><div class="box">
+    <svg viewBox="0 0 24 24"><path d="M6 16 V11 a6 6 0 0 1 12 0 V16 L20 18.5 H4 Z"/><path d="M10 18.5 a2 2 0 0 0 4 0"/></svg>
+    <span><b>that hunch you had?</b> It's grounded now.</span></div></div>
+</div></div></div>
+<script>
+const W=1920,H=1080,c=document.getElementById('c'),cam=document.getElementById('cam');
+const fit=()=>c.style.transform='scale('+Math.min(innerWidth/W,innerHeight/H)+')';addEventListener('resize',fit);fit();
+const $=s=>document.getElementById(s);function at(ms,fn){setTimeout(fn,ms);}
+// gentle rAF camera push-in (reads virtual clock; NOT a CSS transition) — subtle life, no edge-crop
+const DUR=16500;
+function camf(t){const p=Math.min((t||0)/DUR,1);cam.style.transform='scale('+(1.0+0.035*p)+')';requestAnimationFrame(camf);}
+requestAnimationFrame(camf);
+// beat 136.80s; the rail FILLS to each node as the VO names it (left=160, span 1520 across 4 gaps of 380)
+const X=[160,540,920,1300,1680];
+function light(i){$('n'+i).classList.add('in');$('fill').style.width=(X[i]-160)+'px';}
+at(120, ()=>$('kick').classList.add('in'));
+at(700, ()=>light(0));   // "one run at a time" @137.5
+at(3700,()=>light(1));   // "WhatsApp" @140.5
+at(6000,()=>light(2));   // "strips identifiers" @142.8
+at(9300,()=>light(3));   // "remembers" @146.1
+at(12600,()=>$('lift').classList.add('on'));  // brighten as it reaches the payoff
+at(13000,()=>light(4));  // "pings you" @149.8
+at(15200,()=>$('toast').classList.add('in')); // "grounded now" @152.0
+</script>
+</body></html>

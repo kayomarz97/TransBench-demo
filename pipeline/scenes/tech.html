@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>tech</title>
+<style>
+  :root{--bg:#0A0E14;--bg-elev:#131A24;--bg-elev-2:#1B2330;--text:#E6EDF3;--muted:#7D8A9C;--faint:#4A5568;
+    --accent:#2DD4BF;--accent-2:#8B7DF6;--grounded:#34D399;--alert:#F0637A;--warn:#F5B759;
+    --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);--accent-wash:rgba(45,212,191,.14);
+    --accent-2-wash:rgba(139,125,246,.16);--grounded-wash:rgba(52,211,153,.14);--alert-wash:rgba(240,99,122,.14);
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}*{box-sizing:border-box}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #c{position:relative;width:1920px;height:1080px;transform-origin:center}
+  #cam{position:absolute;inset:0;transform-origin:52% 46%;color:var(--text);font-family:var(--sans)}
+  .kick{position:absolute;top:70px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:19px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--faint);opacity:0;transition:opacity .5s var(--ease)}
+  .kick.in{opacity:1}.kick b{color:var(--accent)}
+  /* langgraph badge */
+  .lg{position:absolute;top:120px;right:120px;display:flex;align-items:center;gap:12px;opacity:0;transform:translateY(-8px);transition:all .5s var(--ease)}
+  .lg.in{opacity:1;transform:none}
+  .lg .t{font-family:var(--mono);font-size:16px;color:var(--accent-2)}.lg .t small{display:block;color:var(--muted);font-size:12px;letter-spacing:.08em}
+  svg{overflow:visible}
+  /* flow nodes */
+  .node{position:absolute;transform:translate(-50%,-50%);opacity:0;transition:all .5s var(--ease)}
+  .node.in{opacity:1}
+  .box{background:var(--bg-elev);border:1px solid var(--line-2);border-radius:12px;padding:14px 18px;text-align:center;font-family:var(--mono);
+    font-size:18px;color:var(--text);white-space:nowrap;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+  .box small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+  .box.teal{border-color:var(--accent);color:var(--accent)} .box.green{border-color:var(--grounded);color:var(--grounded);background:var(--grounded-wash)}
+  .box.violet{border-color:var(--accent-2);color:var(--accent-2)} .box.red{border-color:var(--alert);color:var(--alert);background:var(--alert-wash)}
+  .box.drop{opacity:.5;text-decoration:line-through}
+  .lab{position:absolute;transform:translate(-50%,-50%);font-family:var(--mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:0;transition:opacity .5s var(--ease)}
+  .lab.in{opacity:1}
+  /* logos */
+  .logo{background:#fff;border-radius:8px;padding:7px 11px;display:inline-flex;align-items:center;font-family:var(--sans);font-weight:800;font-size:17px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .logo.pm{color:#326295} .logo.epmc{color:#c8102e;font-size:15px} .logo.geo{color:#20558a}
+  /* edges */
+  #edges path{fill:none;stroke:var(--line-2);stroke-width:2;stroke-dasharray:6 6;opacity:0;transition:opacity .5s var(--ease)}
+  #edges path.in{opacity:.7;stroke:var(--accent);stroke-dasharray:none}
+  /* models */
+  .models{position:absolute;bottom:70px;left:0;right:0;display:flex;gap:20px;justify-content:center}
+  .model{display:flex;align-items:center;gap:13px;background:var(--bg-elev);border:1px solid var(--line);border-radius:14px;padding:14px 20px;
+    opacity:0;transform:translateY(12px);transition:all .5s var(--ease)}
+  .model.in{opacity:1;transform:none}
+  .model .nm{font-family:var(--mono);font-size:20px;font-weight:700}.model .rl{font-family:var(--mono);font-size:13px;color:var(--muted)}
+  .model.o .nm{color:var(--accent)} .model.s .nm{color:var(--accent-2)} .model.h .nm{color:var(--grounded)}
+  /* the entail gate DEMOTES textbook/background facts */
+  .tbfact{background:var(--bg-elev);border:1px dashed var(--line-2);border-radius:10px;padding:9px 15px;font-family:var(--mono);
+    font-size:15px;color:var(--text);white-space:nowrap;transition:all .5s var(--ease)}
+  .tbfact .dm{color:var(--warn);opacity:0;transition:opacity .5s var(--ease)}
+  .tbfact.demoted{opacity:.6;border-style:dotted;transform:translateY(7px)}
+  .tbfact.demoted .lbl{text-decoration:line-through;color:var(--muted)}
+  .tbfact.demoted .dm{opacity:1}
+</style></head>
+<body><div id="stage"><div id="c"><div id="cam">
+  <div class="kick" id="kick">How it works · <b>8 agents · 3 rigor gates</b></div>
+  <div class="lg" id="lg">
+    <svg width="52" height="40" viewBox="0 0 60 44"><g stroke="#8B7DF6" stroke-width="2" fill="#0A0E14"><line x1="12" y1="22" x2="30" y2="9" stroke-linecap="round"/><line x1="12" y1="22" x2="30" y2="35" stroke-linecap="round"/><line x1="30" y1="9" x2="48" y2="22" stroke-linecap="round"/><line x1="30" y1="35" x2="48" y2="22" stroke-linecap="round"/><line x1="30" y1="9" x2="30" y2="35" stroke-linecap="round"/><circle cx="12" cy="22" r="6"/><circle cx="30" cy="9" r="6"/><circle cx="30" cy="35" r="6"/><circle cx="48" cy="22" r="6"/></g></svg>
+    <div class="t">LangGraph<small>8-agent orchestration</small></div></div>
+
+  <svg id="edges" style="position:absolute;inset:0;width:1920px;height:1080px">
+    <path id="e0" d="M255 360 C360 360 360 300 470 300"></path>
+    <path id="e1" d="M255 360 C360 360 360 380 470 380"></path>
+    <path id="e2" d="M255 360 C360 360 360 470 470 470"></path>
+    <path id="e3" d="M700 380 C780 380 780 400 855 400"></path>
+    <path id="e4" d="M1010 400 C1090 400 1090 400 1170 400"></path>
+    <path id="e5" d="M1330 400 C1420 400 1420 320 1520 320"></path>
+    <path id="e6" d="M1015 415 C1200 445 1380 470 1500 470"></path>
+  </svg>
+
+  <div class="lab" id="lab1" style="left:150px;top:250px">observation</div>
+  <div class="node in" id="obs" style="left:150px;top:360px"><div class="box teal">one sentence<small>de-identified</small></div></div>
+
+  <div class="lab" id="lab2" style="left:590px;top:220px">hypotheses · falsifiable</div>
+  <div class="node" id="h1" style="left:590px;top:300px"><div class="box violet" id="h1b">H1</div></div>
+  <div class="node" id="h2" style="left:590px;top:380px"><div class="box violet" id="h2b">H2</div></div>
+  <div class="node" id="h3" style="left:590px;top:470px"><div class="box violet" id="h3b">H3</div></div>
+
+  <div class="lab" id="lab3" style="left:930px;top:250px">grounded in real papers</div>
+  <div class="node" id="ret" style="left:930px;top:400px"><div style="display:flex;flex-direction:column;gap:8px">
+    <span class="logo pm">Pub<span style="color:#0a0e14">Med</span></span>
+    <span class="logo epmc">Europe&nbsp;PMC</span>
+    <span class="logo geo">GEO</span></div></div>
+
+  <div class="lab" id="lab4" style="left:1250px;top:300px">3 rigor gates</div>
+  <div class="node" id="gates" style="left:1250px;top:400px"><div class="box">entail · ground · novelty</div></div>
+
+  <div class="node" id="ship" style="left:1620px;top:320px"><div class="box green">✓ grounded → experiment</div></div>
+  <div class="node" id="drop" style="left:1620px;top:470px"><div class="box red" id="dropb">✕ no citation → dropped</div></div>
+
+  <div class="node" id="tb" style="left:1250px;top:552px"><div class="tbfact" id="tbfact"><span class="lbl">textbook fact</span><span class="dm"> ⤵ demoted</span></div></div>
+
+  <div class="models" id="models">
+    <div class="model o" id="mo"><div class="nm">Opus 4.8</div><div class="rl">hypothesize · design</div></div>
+    <div class="model s" id="ms"><div class="nm">Sonnet</div><div class="rl">decompose · novelty</div></div>
+    <div class="model h" id="mh"><div class="nm">Haiku</div><div class="rl">grade · assemble</div></div>
+  </div>
+</div></div></div>
+<script>
+const W=1920,H=1080,c=document.getElementById('c'),cam=document.getElementById('cam');
+const fit=()=>c.style.transform='scale('+Math.min(innerWidth/W,innerHeight/H)+')';addEventListener('resize',fit);fit();
+const $=s=>document.getElementById(s);function at(ms,fn){setTimeout(fn,ms);}
+const DUR=34000;
+function camf(t){const p=Math.min((t||0)/DUR,1);const z=1.0+0.10*p;cam.style.transform='scale('+z+')';requestAnimationFrame(camf);}
+requestAnimationFrame(camf);
+// beat 25.89s; scene-relative ms anchored to VO words (Draft-4 re-sync)
+at(100, ()=>$('kick').classList.add('in'));
+at(2100,()=>$('lab1').classList.add('in'));                                   // "one plain sentence" @28.0
+at(4100,()=>{$('lab2').classList.add('in');['e0','e1','e2'].forEach(e=>$(e).classList.add('in'));}); // "biological angles" @30.0
+at(6000,()=>['h1','h2','h3'].forEach((e,i)=>setTimeout(()=>$(e).classList.add('in'),i*220))); // "writes hypotheses" @31.7
+at(9800,()=>{$('lab3').classList.add('in');$('ret').classList.add('in');$('e3').classList.add('in');}); // "PubMed and Europe PMC" @35.9
+at(12500,()=>['h2b','h3b'].forEach(id=>{$(id).classList.remove('violet');$(id).classList.add('green');})); // "grounds every one in papers" @37.9
+at(16300,()=>{$('h1b').classList.remove('violet');$('h1b').classList.add('red');$('h1b').classList.add('drop'); // H1's citation won't resolve
+              $('drop').classList.add('in');$('e6').classList.add('in');});    // "if a citation won't resolve, it's dropped" @42.5 (explicit box, edge from retrieval)
+at(18700,()=>{$('e4').classList.add('in');$('lab4').classList.add('in');$('gates').classList.add('in');}); // "three rigor gates" @44.6
+at(20600,()=>$('lg').classList.add('in'));                                     // "LangGraph" @46.5
+at(21500,()=>$('tb').classList.add('in'));                                     // "it demotes textbook facts" @47.4 (chip appears)
+at(22200,()=>$('tbfact').classList.add('demoted'));                            // …then it is demoted (grays · struck · ⤵ demoted)
+at(25100,()=>{$('ship').classList.add('in');$('e5').classList.add('in');});    // "ships nothing" @51.0
+at(26100,()=>$('mo').classList.add('in'));                                     // Opus @52.0
+at(29400,()=>$('ms').classList.add('in'));                                     // Sonnet @55.3
+at(32200,()=>$('mh').classList.add('in'));                                     // Haiku @58.1
+</script>
+</body></html>

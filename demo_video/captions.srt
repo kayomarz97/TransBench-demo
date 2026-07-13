@@ -1,0 +1,439 @@
+1
+00:00:00,095 --> 00:00:01,164
+Medical doctor
+
+2
+00:00:01,214 --> 00:00:02,379
+AI engineer
+
+3
+00:00:02,429 --> 00:00:03,283
+Same person
+
+4
+00:00:03,333 --> 00:00:04,676
+so now I get annoyed by two
+
+5
+00:00:04,726 --> 00:00:07,402
+industries instead of one I'm Kaeyomerz
+
+6
+00:00:07,452 --> 00:00:09,795
+Every clinic day throws up a puzzle
+
+7
+00:00:09,845 --> 00:00:11,307
+a patient who won't respond to a
+
+8
+00:00:11,357 --> 00:00:12,605
+first-line drug
+
+9
+00:00:12,655 --> 00:00:14,498
+a lab value that doesn't fit
+
+10
+00:00:14,548 --> 00:00:16,867
+Turning that spark into a testable experiment
+
+11
+00:00:16,917 --> 00:00:18,438
+takes weeks of reading
+
+12
+00:00:18,488 --> 00:00:19,950
+and a favour from a computational
+
+13
+00:00:20,000 --> 00:00:21,105
+biologist
+
+14
+00:00:21,155 --> 00:00:22,652
+So most sparks just die on the
+
+15
+00:00:22,702 --> 00:00:23,557
+whiteboard
+
+16
+00:00:23,607 --> 00:00:25,949
+And this is where TransBench comes in
+
+17
+00:00:25,999 --> 00:00:27,485
+Here's what it actually does
+
+18
+00:00:27,535 --> 00:00:29,294
+It takes that one plain sentence and
+
+19
+00:00:29,344 --> 00:00:31,461
+breaks it into biological angles
+
+20
+00:00:31,511 --> 00:00:32,711
+It writes hypotheses
+
+21
+00:00:32,761 --> 00:00:34,068
+you could prove wrong
+
+22
+00:00:34,118 --> 00:00:35,830
+then goes to the real literature
+
+23
+00:00:35,880 --> 00:00:37,735
+PubMed and Europe PMC
+
+24
+00:00:37,785 --> 00:00:39,544
+and grounds every one in papers you
+
+25
+00:00:39,594 --> 00:00:41,640
+can actually open If a citation won't
+
+26
+00:00:41,690 --> 00:00:43,282
+resolve it's dropped
+
+27
+00:00:43,332 --> 00:00:45,902
+Eight agents and three rigor gates wired
+
+28
+00:00:45,952 --> 00:00:47,366
+together with LangGraph
+
+29
+00:00:47,416 --> 00:00:49,163
+it demotes textbook facts
+
+30
+00:00:49,213 --> 00:00:50,913
+and when nothing clears the bar it
+
+31
+00:00:50,963 --> 00:00:51,985
+ships nothing
+
+32
+00:00:52,035 --> 00:00:53,497
+Opus writes the hypotheses
+
+33
+00:00:53,547 --> 00:00:55,282
+and designs the experiment
+
+34
+00:00:55,332 --> 00:00:56,711
+Sonnet decomposes
+
+35
+00:00:56,761 --> 00:00:58,021
+and checks novelty
+
+36
+00:00:58,071 --> 00:00:59,092
+Haiku grades
+
+37
+00:00:59,142 --> 00:01:01,033
+and assembles the brief
+
+38
+00:01:01,083 --> 00:01:02,200
+Here's the fun part
+
+39
+00:01:02,250 --> 00:01:03,259
+I barely wrote a line of it
+
+40
+00:01:03,309 --> 00:01:04,200
+by hand
+
+41
+00:01:04,250 --> 00:01:06,009
+I tunnelled into a bare Linux server
+
+42
+00:01:06,059 --> 00:01:07,307
+from VS Code
+
+43
+00:01:07,357 --> 00:01:08,831
+and let the Claude command line do
+
+44
+00:01:08,881 --> 00:01:09,783
+the building
+
+45
+00:01:09,833 --> 00:01:11,807
+agents that read the real docs
+
+46
+00:01:11,857 --> 00:01:14,045
+a scanner that guards every push
+
+47
+00:01:14,095 --> 00:01:15,247
+hooks that won't let me ship a
+
+48
+00:01:15,297 --> 00:01:16,140
+mess
+
+49
+00:01:16,190 --> 00:01:16,973
+And when I was stuck on the
+
+50
+00:01:17,023 --> 00:01:17,735
+ward
+
+51
+00:01:17,785 --> 00:01:19,319
+I kept it going from my phone
+
+52
+00:01:19,369 --> 00:01:20,450
+on breaks
+
+53
+00:01:20,500 --> 00:01:22,378
+Things that would've meant days of learning
+
+54
+00:01:22,428 --> 00:01:24,009
+and hours of building I did in
+
+55
+00:01:24,059 --> 00:01:25,329
+minutes
+
+56
+00:01:25,379 --> 00:01:26,460
+And any scientist
+
+57
+00:01:26,510 --> 00:01:28,139
+or doctor can run it too
+
+58
+00:01:28,189 --> 00:01:31,234
+one copy-paste into Claude Code no engineering
+
+59
+00:01:31,284 --> 00:01:32,436
+It even replays
+
+60
+00:01:32,486 --> 00:01:33,555
+byte-identical
+
+61
+00:01:33,605 --> 00:01:36,365
+so the results are yours to reproduce
+
+62
+00:01:36,415 --> 00:01:37,163
+Watch
+
+63
+00:01:37,213 --> 00:01:38,841
+I paste a plain observation
+
+64
+00:01:38,891 --> 00:01:40,591
+It breaks the case into angles
+
+65
+00:01:40,641 --> 00:01:41,937
+proposes hypotheses
+
+66
+00:01:41,987 --> 00:01:44,294
+tied to real clickable papers
+
+67
+00:01:44,344 --> 00:01:45,984
+and when the evidence isn't there it
+
+68
+00:01:46,034 --> 00:01:48,210
+says so and ships nothing
+
+69
+00:01:48,260 --> 00:01:50,725
+The guardrails I set up wouldn't budge
+
+70
+00:01:50,775 --> 00:01:52,856
+The brief hands me a ready-made prompt
+
+71
+00:01:52,906 --> 00:01:54,654
+I drop it into Claude Science
+
+72
+00:01:54,704 --> 00:01:57,642
+it pulls a real public single-cell dataset
+
+73
+00:01:57,692 --> 00:01:59,725
+like the Gladstone T-cell data and it
+
+74
+00:01:59,775 --> 00:02:01,535
+can pull others whenever the question calls
+
+75
+00:02:01,585 --> 00:02:03,666
+for it It runs the analysis
+
+76
+00:02:03,716 --> 00:02:05,106
+and draws the figures
+
+77
+00:02:05,156 --> 00:02:06,654
+A sentence at the bedside
+
+78
+00:02:06,704 --> 00:02:08,380
+to a grounded hypothesis
+
+79
+00:02:08,430 --> 00:02:09,368
+to a figure
+
+80
+00:02:09,418 --> 00:02:11,106
+the next step is a pipette
+
+81
+00:02:11,156 --> 00:02:12,261
+not another meeting
+
+82
+00:02:12,311 --> 00:02:13,558
+And you can run it yourself
+
+83
+00:02:13,608 --> 00:02:14,594
+same inputs
+
+84
+00:02:14,644 --> 00:02:16,857
+same figure every time
+
+85
+00:02:16,907 --> 00:02:18,476
+Today it's one run at a time
+
+86
+00:02:18,526 --> 00:02:21,262
+Next text it an observation from WhatsApp
+
+87
+00:02:21,312 --> 00:02:22,667
+like you'd text a colleague
+
+88
+00:02:22,717 --> 00:02:25,024
+It strips patient identifiers before a word
+
+89
+00:02:25,074 --> 00:02:25,964
+is stored
+
+90
+00:02:26,014 --> 00:02:26,821
+It remembers
+
+91
+00:02:26,871 --> 00:02:27,869
+every brief
+
+92
+00:02:27,919 --> 00:02:29,679
+so when new evidence lands
+
+93
+00:02:29,729 --> 00:02:31,810
+it pings you that hunch you had
+
+94
+00:02:31,860 --> 00:02:33,425
+It's grounded now
+
+95
+00:02:33,475 --> 00:02:34,485
+One confession
+
+96
+00:02:34,535 --> 00:02:36,223
+this video was planned and edited by
+
+97
+00:02:36,273 --> 00:02:37,544
+Claude Code too
+
+98
+00:02:37,594 --> 00:02:38,794
+I mostly just told Claude how I
+
+99
+00:02:38,844 --> 00:02:39,711
+was feeling
+
+100
+00:02:39,761 --> 00:02:41,080
+None of this fits into a weekend
+
+101
+00:02:41,130 --> 00:02:42,604
+without the Max plan
+
+102
+00:02:42,654 --> 00:02:44,806
+so thank you One clinician
+
+103
+00:02:44,856 --> 00:02:46,616
+one command line and a model that
+
+104
+00:02:46,666 --> 00:02:47,854
+kept me honest
+
+105
+00:02:47,904 --> 00:02:49,199
+This is just a preview
+
+106
+00:02:49,249 --> 00:02:51,175
+the whole thing's documented on GitHub
+
+107
+00:02:51,225 --> 00:02:52,401
+If you're wondering what I'd build with
+
+108
+00:02:52,451 --> 00:02:53,818
+a team around me instead of a
+
+109
+00:02:53,868 --> 00:02:54,616
+terminal
+
+110
+00:02:54,666 --> 00:02:55,530
+so am I

@@ -1,0 +1,12 @@
+# The rendered film lives on YouTube — not committed here (keeps the repo light).
+# The local demo_video/ folder still has the mp4s for uploading.
+*.mp4
+
+# Never commit raw captures, screen recordings, or secrets.
+*.zip
+.env
+*.local.md
+__pycache__/
+_recording_cache/
+_tmp/
+.DS_Store

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>outro cards</title>
+<style>
+  :root{--bg:#0A0E14;--bg-elev:#131A24;--text:#E6EDF3;--muted:#7D8A9C;--faint:#4A5568;
+    --accent:#2DD4BF;--accent-2:#8B7DF6;--grounded:#34D399;
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}*{box-sizing:border-box}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #c{position:relative;width:1920px;height:1080px;transform-origin:center;color:var(--text);font-family:var(--sans);overflow:hidden}
+  .bm{position:absolute;top:70px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:19px;letter-spacing:.2em;color:var(--muted);opacity:0;transition:opacity .5s var(--ease)}
+  .bm.in{opacity:1}
+  .card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    opacity:0;transform:translateY(16px);transition:opacity .45s var(--ease),transform .45s var(--ease);padding:0 220px;text-align:center}
+  .card.in{opacity:1;transform:none}
+  .card .lab{font-family:var(--mono);font-size:21px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .card .big{font-size:52px;font-weight:700;letter-spacing:-.01em;line-height:1.12}
+  .card .big em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card .sub{font-size:25px;color:var(--muted);font-family:var(--mono)}
+  .card .url{font-family:var(--mono);font-size:24px;color:var(--accent);margin-top:6px}
+  #site{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;transition:opacity .7s var(--ease)}
+  #site.in{opacity:1}#site.out{opacity:0}
+  #site .name{font-size:78px;font-weight:700;letter-spacing:-.02em}
+  #site .rule{height:5px;width:0;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .8s var(--ease)}
+  #site.in .rule{width:520px}
+  #site .u{font-family:var(--mono);font-size:24px;letter-spacing:.1em;color:var(--muted)}
+</style></head>
+<body><div id="stage"><div id="c">
+  <div class="bm" id="bm">TRANSBENCH</div>
+  <!-- Draft-4: headings word-synced to the post-curtain VO; sub-text kept meaningful -->
+  <div class="card" id="c1"><div class="lab">Planned, edited &amp; co-piloted by</div><div class="big"><em>Claude Code</em></div><div class="sub">script, shot list, and the cut you're watching.</div></div>
+  <div class="card" id="c2"><div class="lab">Powered by</div><div class="big">the <em>Max plan</em> · one Hetzner box</div><div class="sub">and an unreasonable number of <code>uv sync</code>s.</div></div>
+  <div class="card" id="c3"><div class="lab">Built by</div><div class="big">one clinician · one <em>command line</em></div><div class="sub">…and a model that kept me honest.</div></div>
+  <div class="card" id="c4"><div class="lab">This is just a preview</div><div class="big">the whole thing's on <em>GitHub</em></div><div class="url">github.com/kayomarz97/TransBench</div></div>
+  <div id="site"><div class="name">Kayomarz</div><div class="rule"></div><div class="u">kayomarz.com</div></div>
+</div></div>
+<script>
+const W=1920,H=1080,c=document.getElementById('c');
+const fit=()=>c.style.transform='scale('+Math.min(innerWidth/W,innerHeight/H)+')';addEventListener('resize',fit);fit();
+const $=s=>document.getElementById(s);function at(ms,fn){setTimeout(fn,ms);}
+at(60,()=>$('bm').classList.add('in'));
+// beat: curtain[0:3.2] plays first, so outro2 t=0 == 156.58s abs. Card HEADINGS land on their VO word.
+at(1000, ()=>$('c1').classList.add('in')); at(3100, ()=>$('c1').classList.remove('in'));  // "told Claude how I was feeling" @158.2
+at(3300, ()=>$('c2').classList.add('in')); at(6700, ()=>$('c2').classList.remove('in'));  // "…without the Max plan" @161.6
+at(7000, ()=>$('c3').classList.add('in')); at(10600,()=>$('c3').classList.remove('in'));  // "one command line…kept me honest" @165.0–167.0
+at(11000,()=>$('c4').classList.add('in')); at(14100,()=>$('c4').classList.remove('in'));  // "the whole thing's…on GitHub" @169.5–170.4
+at(14300,()=>{$('bm').classList.remove('in');$('site').classList.add('in');});            // "what I'd build…" @171.2
+at(18600,()=>$('site').classList.add('out'));                                             // fade near beat end (≈175.2s)
+</script>
+</body></html>

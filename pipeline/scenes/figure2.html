@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>figure</title>
+<style>
+  :root{--bg:#0A0E14;--bg-elev:#131A24;--bg-elev-2:#1B2330;--text:#E6EDF3;--muted:#7D8A9C;--faint:#4A5568;
+    --accent:#2DD4BF;--accent-2:#8B7DF6;--grounded:#34D399;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+    --grounded-wash:rgba(52,211,153,.14);--accent-wash:rgba(45,212,191,.14);
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}*{box-sizing:border-box}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #c{position:relative;width:1920px;height:1080px;transform-origin:center}
+  #cam{position:absolute;inset:0;transform-origin:50% 42%;color:var(--text);font-family:var(--sans)}
+  .lbl{position:absolute;top:38px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:19px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);opacity:0;transition:opacity .5s var(--ease)}
+  .lbl.in{opacity:1}.lbl b{color:var(--accent)}
+  .ds{position:absolute;top:78px;left:0;right:0;display:flex;gap:12px;justify-content:center;opacity:0;transition:opacity .5s var(--ease)}
+  .ds.in{opacity:1}
+  .dchip{font-family:var(--mono);font-size:15px;color:var(--faint);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+  .dchip.on{color:var(--accent);border-color:var(--accent);background:var(--accent-wash)}
+  .badge{position:absolute;top:40px;right:130px;display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:17px;
+    color:var(--grounded);background:var(--grounded-wash);border:1px solid rgba(52,211,153,.45);border-radius:999px;padding:9px 15px;
+    opacity:0;transform:scale(.85);transition:all .4s var(--ease)}
+  .badge.in{opacity:1;transform:none}
+  .grid{position:absolute;top:140px;left:50%;transform:translateX(-50%);width:900px;height:600px;
+    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px}
+  /* min-width/height:0 lets the 1fr tracks actually bind — without them the 1117x880 panels
+     force each row to its intrinsic height and the grid silently overflows onto the recap band. */
+  .cell{background:#fff;border-radius:9px;padding:7px;box-shadow:0 18px 54px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;
+    min-width:0;min-height:0;overflow:hidden;opacity:0;transform:scale(.92);transition:all .5s var(--ease)}
+  .cell.in{opacity:1;transform:none}
+  .cell img{max-width:100%;max-height:100%;border-radius:4px;display:block}
+  /* recap in a CLEAN band below the grid — no overlap */
+  .arc{position:absolute;left:0;right:0;top:800px;display:flex;align-items:center;justify-content:center;gap:16px;font-family:var(--mono)}
+  .step{display:flex;align-items:center;gap:16px;opacity:0;transform:translateY(10px);transition:all .5s var(--ease)}
+  .step.in{opacity:1;transform:none}
+  .node{font-size:22px} .node.c{color:var(--accent)} .node.v{color:var(--accent-2)} .node.g{color:var(--grounded)}
+  .to{color:var(--faint);font-size:20px}
+  .repro{position:absolute;left:0;right:0;top:860px;text-align:center;font-family:var(--mono);font-size:19px;color:var(--muted);
+    opacity:0;transition:opacity .5s var(--ease)}
+  .repro.in{opacity:1}.repro b{color:var(--grounded)}
+</style></head>
+<body><div id="stage"><div id="c"><div id="cam">
+  <div class="lbl" id="lbl">Claude Science · <b>Gladstone / Marson · GEO GSE278572</b></div>
+  <div class="ds" id="ds">
+    <span class="dchip on">Gladstone · GSE278572</span><span class="dchip">GEO</span><span class="dchip">Tabula Sapiens</span><span class="dchip">…content-verified</span></div>
+  <span class="badge" id="badge">
+    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M20 6 L9 17 L4 12" fill="none" stroke="#34D399" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    figure rendered</span>
+  <div class="grid">
+    <div class="cell" id="pa"><img src="panel_a.png"></div>
+    <div class="cell" id="pb"><img src="panel_b.png"></div>
+    <div class="cell" id="pc"><img src="panel_c.png"></div>
+    <div class="cell" id="pd"><img src="panel_d.png"></div>
+  </div>
+  <div class="arc">
+    <div class="step" id="s1"><span class="node c">a sentence at the bedside</span></div>
+    <div class="step" id="s2"><span class="to">→</span><span class="node v">a grounded hypothesis</span></div>
+    <div class="step" id="s3"><span class="to">→</span><span class="node g">a figure</span></div>
+    <div class="step" id="s4"><span class="to">→</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" style="vertical-align:-4px"><path d="M9 2 L15 2 L15 9 L19 20 Q19 22 17 22 L7 22 Q5 22 5 20 L9 9 Z" fill="none" stroke="#2DD4BF" stroke-width="2" stroke-linejoin="round"/><path d="M9 9 L15 9" stroke="#2DD4BF" stroke-width="2"/></svg>
+      <span class="node c">a pipette — not another meeting</span></div>
+  </div>
+  <div class="repro" id="repro">run it yourself — <b>same inputs, same figure, every time.</b></div>
+</div></div></div>
+<script>
+const W=1920,H=1080,c=document.getElementById('c'),cam=document.getElementById('cam');
+const fit=()=>c.style.transform='scale('+Math.min(innerWidth/W,innerHeight/H)+')';addEventListener('resize',fit);fit();
+const $=s=>document.getElementById(s);function at(ms,fn){setTimeout(fn,ms);}
+const DUR=21000;function camf(t){cam.style.transform='scale('+(1+0.035*Math.min((t||0)/DUR,1))+')';requestAnimationFrame(camf);}
+requestAnimationFrame(camf);
+// science figure part starts ~115.5s
+at(200, ()=>$('lbl').classList.add('in'));
+at(2200,()=>$('ds').classList.add('in'));                 // "like Gladstone … can retrieve others" @117.7-120.5
+at(7500,()=>$('pa').classList.add('in'));                 // "draws the figures"
+at(8100,()=>$('pb').classList.add('in'));
+at(8700,()=>$('pc').classList.add('in'));
+at(9300,()=>$('pd').classList.add('in'));
+at(10400,()=>$('s1').classList.add('in'));                // "a sentence at the bedside" @125.9
+at(11800,()=>$('s2').classList.add('in'));                // "grounded hypothesis" @127.3
+at(13100,()=>{$('s3').classList.add('in');$('badge').classList.add('in');}); // "a figure" @128.6
+at(14800,()=>$('s4').classList.add('in'));                // "pipette" @130.3
+at(17200,()=>$('repro').classList.add('in'));             // "run it yourself" @132.7
+</script>
+</body></html>

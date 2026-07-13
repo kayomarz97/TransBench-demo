@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>one paste</title>
+<style>
+  :root{--bg:#0A0E14;--bg-elev:#131A24;--bg-elev-2:#1B2330;--text:#E6EDF3;--muted:#7D8A9C;--faint:#4A5568;
+    --accent:#2DD4BF;--accent-2:#8B7DF6;--grounded:#34D399;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+    --accent-wash:rgba(45,212,191,.14);--grounded-wash:rgba(52,211,153,.14);
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}*{box-sizing:border-box}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #c{position:relative;width:1920px;height:1080px;transform-origin:center;color:var(--text);font-family:var(--sans)}
+  .kick{position:absolute;top:150px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:22px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);opacity:0;transition:opacity .5s var(--ease)}
+  .kick.in{opacity:1}
+  .sub{position:absolute;top:198px;left:0;right:0;text-align:center;font-size:34px;font-weight:700;color:var(--text);opacity:0;transition:all .5s var(--ease)}
+  .sub.in{opacity:1}
+  .term{position:absolute;left:50%;top:330px;transform:translateX(-50%) translateY(16px);width:1340px;background:var(--bg-elev);
+    border:1px solid var(--line-2);border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,.5);padding:26px 30px;
+    font-family:var(--mono);opacity:0;transition:all .55s var(--ease)}
+  .term.in{opacity:1;transform:translateX(-50%)}
+  .dots{display:flex;gap:9px;margin-bottom:22px}.dots i{width:13px;height:13px;border-radius:50%;background:var(--bg-elev-2);display:block}
+  .ln{font-size:24px;line-height:1.7;color:var(--text)}
+  .pr{color:var(--grounded)} .cmd{color:var(--text)} .url{color:var(--accent)} .cm{color:var(--faint)}
+  .paste{display:inline-block;font-size:16px;color:var(--accent);background:var(--accent-wash);border:1px solid var(--accent);
+    border-radius:8px;padding:4px 12px;margin-left:14px;opacity:0;transition:opacity .4s var(--ease)}
+  .paste.in{opacity:1}
+  .badge{position:absolute;top:660px;left:0;right:0;display:flex;gap:14px;justify-content:center;opacity:0;transition:all .5s var(--ease)}
+  .badge.in{opacity:1}
+  .chip{font-family:var(--mono);font-size:19px;color:var(--grounded);background:var(--grounded-wash);border:1px solid rgba(52,211,153,.4);
+    border-radius:999px;padding:12px 20px}
+  .foot{position:absolute;top:760px;left:0;right:0;text-align:center;font-size:26px;color:var(--muted);opacity:0;transition:all .5s var(--ease)}
+  .foot.in{opacity:1}.foot b{color:var(--text)}
+</style></head>
+<body><div id="stage"><div id="c">
+  <div class="kick" id="kick">Install in one paste</div>
+  <div class="sub" id="sub">one paste into Claude Code — no engineering</div>
+  <div class="term" id="term">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="ln"><span class="pr">$</span> <span class="cmd">claude --model haiku</span></div>
+    <div class="ln"><span class="pr">&gt;</span> <span class="cm">Read</span> <span class="url">https://…/TransBench/main/INSTALL_AGENT.md</span><span class="paste" id="paste">⌘V · one paste</span></div>
+    <div class="ln" id="ok" style="opacity:0;transition:opacity .4s var(--ease)"><span class="pr">✓</span> <span class="cm">connector registered · ready</span></div>
+  </div>
+  <div class="badge" id="badge"><span class="chip">golden mode</span><span class="chip">byte-identical replay</span></div>
+  <div class="foot" id="foot">the results are <b>yours to reproduce</b>.</div>
+</div></div>
+<script>
+const W=1920,H=1080,c=document.getElementById('c');
+const fit=()=>c.style.transform='scale('+Math.min(innerWidth/W,innerHeight/H)+')';addEventListener('resize',fit);fit();
+const $=s=>document.getElementById(s);function at(ms,fn){setTimeout(fn,ms);}
+// beat 81.49s; times beat-relative
+at(120, ()=>{$('kick').classList.add('in');$('sub').classList.add('in');});
+at(900, ()=>$('term').classList.add('in'));
+at(3100,()=>$('paste').classList.add('in'));        // "one copy-paste"
+at(4600,()=>$('ok').style.opacity=1);               // "no engineering" -> registered
+at(7200,()=>$('badge').classList.add('in'));        // "byte-identical" @92.5
+at(9600,()=>$('foot').classList.add('in'));         // "yours to reproduce" @94.9
+</script>
+</body></html>

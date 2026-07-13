@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>intro</title>
+<style>
+  :root{--bg:#0A0E14;--text:#E6EDF3;--muted:#7D8A9C;--accent:#2DD4BF;--accent-2:#8B7DF6;
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}*{box-sizing:border-box}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  #c{position:relative;width:1920px;height:1080px;transform-origin:center}
+  #cam{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transform-origin:center}
+  /* two voices — enter apart, MEET at center, then cross-fade to KAYOMARZ */
+  .voices{display:flex;flex-direction:column;align-items:center;gap:10px;position:absolute}
+  .v{font-family:var(--sans);font-weight:700;font-size:92px;letter-spacing:-.02em;text-align:center;
+    opacity:0;transition:opacity .55s var(--ease),transform .6s var(--ease)}
+  /* enter-from positions (slide in from further out) */
+  .v.doc{color:var(--accent);transform:translateY(-104px) scale(.96)}
+  .v.eng{color:var(--accent-2);transform:translateY(104px) scale(.96)}
+  /* settled reading positions (apart) */
+  .v.doc.in{opacity:1;transform:translateY(-58px)}
+  .v.eng.in{opacity:1;transform:translateY(58px)}
+  /* converge = slide to center + dissolve (the "same person" merge) */
+  .voices.merge .v.doc{opacity:0;transform:translateY(-6px) scale(.9)}
+  .voices.merge .v.eng{opacity:0;transform:translateY(6px) scale(.9)}
+  .plus{font-family:var(--mono);font-size:40px;color:var(--muted);opacity:0;transition:opacity .5s var(--ease)}
+  .plus.in{opacity:1}
+  .voices.merge .plus{opacity:0}
+  /* KAYOMARZ wordmark */
+  .brand{position:absolute;text-align:center;opacity:0;transform:scale(1.12);transition:all .7s var(--ease)}
+  .brand.in{opacity:1;transform:none}
+  .brand h1{font-family:var(--sans);font-weight:800;font-size:132px;letter-spacing:-.02em;margin:0;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand .role{font-family:var(--mono);font-size:24px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-top:14px;
+    opacity:0;transition:opacity .6s var(--ease)}
+  .brand .role.in{opacity:1}
+  .rule{height:5px;width:0;border-radius:5px;margin:22px auto 0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .7s var(--ease)}
+  .rule.in{width:520px}
+</style></head>
+<body><div id="stage"><div id="c"><div id="cam">
+  <div class="voices" id="voices">
+    <span class="v doc" id="vd">Medical doctor.</span>
+    <span class="plus" id="plus">+</span>
+    <span class="v eng" id="ve">AI engineer.</span>
+  </div>
+  <div class="brand" id="brand">
+    <h1>Kayomarz</h1>
+    <div class="role" id="role">Physician · AI Engineer</div>
+    <div class="rule" id="rule"></div>
+  </div>
+</div></div></div>
+<script>
+const W=1920,H=1080,c=document.getElementById('c'),cam=document.getElementById('cam');
+const fit=()=>c.style.transform='scale('+Math.min(innerWidth/W,innerHeight/H)+')';addEventListener('resize',fit);fit();
+const $=s=>document.getElementById(s);function at(ms,fn){setTimeout(fn,ms);}
+// continuous slow camera push-in (rAF-driven so it steps with the virtual clock)
+const DUR=8000;
+function camf(t){const z=1+0.045*Math.min((t||0)/DUR,1);cam.style.transform='scale('+z+')';requestAnimationFrame(camf);}
+requestAnimationFrame(camf);
+at(120, ()=>$('vd').classList.add('in'));                 // "Medical doctor" @0.1 — enters from above
+at(1150,()=>{$('plus').classList.add('in');$('ve').classList.add('in');}); // "AI engineer" @1.2 — enters from below
+at(2400,()=>$('voices').classList.add('merge'));          // "Same person" @2.4 → labels meet at center + dissolve
+at(2550,()=>$('brand').classList.add('in'));              // cross-fade KAYOMARZ in as they merge
+at(3200,()=>{$('role').classList.add('in');$('rule').classList.add('in');}); // settle; holds through spoken name @6.5 to 8.0s
+</script>
+</body></html>
