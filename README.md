@@ -3,7 +3,7 @@
 **A 3-minute product film, made by a physician with zero video-editing skills.**
 Script, animation, voiceover timing, and the entire edit were planned and produced by **Claude Code**. I just told it how I was feeling.
 
-▶️ **Watch it:** _<paste the YouTube link here after upload>_
+▶️ **Watch it:** https://youtu.be/RFRhDaPUonE
 🌐 **Me:** [kayomarz.com](https://kayomarz.com) · 🧪 **The product:** [github.com/kayomarz97/TransBench](https://github.com/kayomarz97/TransBench)
 
 ---
