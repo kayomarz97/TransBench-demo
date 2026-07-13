@@ -3,9 +3,9 @@
 **A 3-minute product film, made by a physician with zero video-editing skills.**
 Script, animation, voiceover timing, and the entire edit were planned and produced by **Claude Code**. I just told it how I was feeling.
 
-▶️ **Watch it below**, or on **[YouTube](https://youtu.be/RFRhDaPUonE)**:
+▶️ **Watch the 3-minute film → [youtu.be/RFRhDaPUonE](https://youtu.be/RFRhDaPUonE)**
 
-<video src="https://github.com/kayomarz97/TransBench-demo/raw/main/demo_video/TransBench_demo_final_1080p.mp4" poster="https://github.com/kayomarz97/TransBench-demo/raw/main/demo_video/thumbnail.png" controls></video>
+[![Watch the TransBench demo film on YouTube](demo_video/thumbnail.png)](https://youtu.be/RFRhDaPUonE)
 🌐 **Me:** [kayomarz.com](https://kayomarz.com) · 🧪 **The product:** [github.com/kayomarz97/TransBench](https://github.com/kayomarz97/TransBench)
 
 ---

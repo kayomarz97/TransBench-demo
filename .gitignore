@@ -1,7 +1,6 @@
-# Draft/480p mp4s and raw captures stay out (keeps the repo light); the FINAL 1080p film is the ONE
-# exception — committed below so GitHub can play it inline in the README. Full film also on YouTube.
+# The rendered film lives on YouTube — not committed here (keeps the repo light; GitHub can't play a
+# committed video inline anyway — only uploaded-asset URLs are allowed by its content-security-policy).
 *.mp4
-!demo_video/TransBench_demo_final_1080p.mp4
 
 # Never commit raw captures, screen recordings, or secrets.
 *.zip
